@@ -21,6 +21,9 @@ The discussin and approach used to obtain a cloud mask is better left for anothe
 ### Significance & Differences between vegetaion indices 
 
 **NDVI** : Normalized Difference Vegetation Index
+
 **EVI** : Enhanced Vegatation Index 
+
 **NDMI**: Normalized Difference Moisture Index
+
 
