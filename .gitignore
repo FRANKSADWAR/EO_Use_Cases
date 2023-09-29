@@ -1,0 +1,10 @@
+IMG_DATA/
+*.tif
+*.JP2
+*.png
+*.GeoTiff
+*.jpeg
+*.geojson
+*.tif
+*.tiff
+*.vrt
