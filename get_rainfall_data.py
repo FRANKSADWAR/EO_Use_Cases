@@ -2,8 +2,8 @@ import rasterio
 from pystac_client import Client
 from odc.stac import stac_load
 
-address = 'https://explorer.digitalearth.africa/stac'
-catalog = Client.open(address)  
+dea_stac_address = 'https://explorer.digitalearth.africa/stac'
+catalog = Client.open(dea_stac_address)  
 
 product_name = 'rainfall_chirps_daily'
 measurement_name = 'rainfall'
@@ -23,16 +23,16 @@ config = {
     }
 }
 
-def load_rainfall_data_from_chirps (lat, lng, start_date, end_date):
+def load_chirps_data(lat, lon, start_date, end_date):
     """
     This function will return a dataset with rainfall values for the lat, lng 
     entered.
     """
 
-    buffer_lat, buffer_lng = 0.02, 0.02  ## This is roughly a grid of 2km by 2km
+    buffer_lat, buffer_lon = 0.02, 0.02  ## This is roughly a grid of 2km by 2km
     ## compute the bounding box
-    xmin, xmax = (lng - buffer_lng, lng + buffer_lng)
-    ymin, ymax = (lat - buffer_lat, lng -buffer_lat)
+    xmin, xmax = (lon - buffer_lon, lon + buffer_lon)
+    ymin, ymax = (lat - buffer_lat, lat + buffer_lat)
 
     # create the bounding box
     bbox = [xmin, ymin, xmax, ymax]
@@ -66,11 +66,10 @@ def load_rainfall_data_from_chirps (lat, lng, start_date, end_date):
         stac_cfg = config, 
     )
 
-    subset = data.sel(longitude = slice(bbox[0], bbox[2]), latitude = slice(bbox[1], bbox[3]))
+    ##subset = data.sel(longitude = slice(bbox[0], bbox[2]), latitude = slice(bbox[1], bbox[3]))
 
 
     #load data into memory and mask no-data values in the xarray dataset
     with rasterio.Env(AWS_S3_ENDPOINT = 's3.af-south-1.amazonaws.com',AWS_NO_SIGN_REQUEST = 'YES'):
-        loaded_data = subset.where(subset.rainfall != measurement_nodata).persist()
-
+        loaded_data = data.where(data.rainfall != measurement_nodata).persist()
     return loaded_data    
