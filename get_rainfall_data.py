@@ -54,7 +54,7 @@ def load_rainfall_data_from_chirps (lat, lng, start_date, end_date):
 
     print(f"--- Found: {len(items): d} datasets ---")
 
-    crs = 'EPSG: 4326'
+    crs = 'EPSG:4326'
     resolution = 0.05
 
     data = stac_load(
