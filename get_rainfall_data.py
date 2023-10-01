@@ -2,8 +2,8 @@ import rasterio
 from pystac_client import Client
 from odc.stac import stac_load
 
-dea_stac_address = 'https://explorer.digitalearth.africa/stac'
-catalog = Client.open(dea_stac_address)  
+deaafrica_stac_address = 'https://explorer.digitalearth.africa/stac'
+catalog = Client.open(deaafrica_stac_address)  
 
 product_name = 'rainfall_chirps_daily'
 measurement_name = 'rainfall'
@@ -32,7 +32,7 @@ def load_chirps_data(lat, lon, start_date, end_date):
     buffer_lat, buffer_lon = 0.02, 0.02  ## This is roughly a grid of 2km by 2km
     ## compute the bounding box
     xmin, xmax = (lon - buffer_lon, lon + buffer_lon)
-    ymin, ymax = (lat - buffer_lat, lat + buffer_lat)
+    ymin, ymax = (lat + buffer_lat, lat + buffer_lat)
 
     # create the bounding box
     bbox = [xmin, ymin, xmax, ymax]
